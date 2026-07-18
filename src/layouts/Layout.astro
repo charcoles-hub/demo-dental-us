@@ -8,7 +8,8 @@ const {
 
 // Ridge + tooth mark, gold on spruce
 const favicon = "data:image/svg+xml," + encodeURIComponent(
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231b2f27'/><path d='M5 21l6-9 4 5.5L19 11l8 10z' fill='%23f0b53f'/></svg>`
+  // Plain '#' here — encodeURIComponent turns it into %23. Pre-escaping double-encodes it.
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='#1b2f27'/><path d='M5 21l6-9 4 5.5L19 11l8 10z' fill='#f0b53f'/></svg>`
 );
 ---
 <!doctype html>
