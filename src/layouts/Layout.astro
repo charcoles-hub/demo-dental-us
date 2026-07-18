@@ -1,0 +1,38 @@
+---
+import "../styles/global.css";
+
+const {
+  title = "Ridgeline Family Dental | Dentist in Downtown Boise, ID",
+  description = "Family and cosmetic dentistry in downtown Boise. In-network with most PPO plans, $99 new patient exam, cleaning and X-rays, and same-day emergency appointments. Call (208) 555-0142.",
+} = Astro.props;
+
+// Ridge + tooth mark, gold on spruce
+const favicon = "data:image/svg+xml," + encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231b2f27'/><path d='M5 21l6-9 4 5.5L19 11l8 10z' fill='%23f0b53f'/></svg>`
+);
+---
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1b2f27" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <link rel="icon" href={favicon} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,952 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const LOBBY = "https://images.unsplash.com/photo-1762625570087-6d98fca29531";
+const CHAIR = "https://images.unsplash.com/photo-1667133295315-820bb6481730";
+const SMILE = "https://images.unsplash.com/photo-1675526607070-f5cbd71dde92";
+const img = (base: string, w: number, q = 72) => `${base}?auto=format&fit=crop&w=${w}&q=${q}`;
+
+const PHONE_HREF = "tel:+12085550142";
+const PHONE = "(208) 555-0142";
+
+const carriers = [
+  "Delta Dental", "Cigna PPO", "MetLife", "Aetna", "Guardian",
+  "Blue Cross of Idaho", "United Concordia", "Ameritas", "Principal", "Humana",
+];
+
+const services = [
+  { name: "New patient exam & cleaning", desc: "Exam, digital X-rays and a standard cleaning. Most PPO patients pay nothing for this visit.", price: "$99" },
+  { name: "Tooth-colored fillings", desc: "Composite, matched to your enamel. Placed in one visit, no silver.", price: "from $185" },
+  { name: "Same-day crowns", desc: "Milled here while you wait. No temporary, no second trip across town.", price: "from $1,250" },
+  { name: "Invisalign clear aligners", desc: "Scanned, planned and tracked in-house. Free consult before you commit.", price: "from $3,900" },
+  { name: "Dental implants", desc: "Guided placement and a crown that bites like the tooth you lost.", price: "from $2,400" },
+  { name: "Root canals", desc: "We save the tooth first and only pull it when there's nothing left to save.", price: "from $850" },
+  { name: "Whitening & veneers", desc: "Brighter, still yours. We won't talk you into a full set you don't need.", price: "from $299" },
+  { name: "Kids' visits, age 1 and up", desc: "Short, gentle first appointments. Nobody gets held down in this office.", price: "from $120" },
+];
+
+const reviews = [
+  {
+    q: "They ran my insurance before they touched anything and handed me a number. The bill matched that number to the dollar. That has never once happened to me at a dentist.",
+    a: "Megan R.", c: "Boise · Same-day crown", featured: true,
+  },
+  { q: "My six-year-old asked when he gets to go back. I've never heard that sentence in my life.", a: "Danny K.", c: "Meridian · Kids' visit" },
+  { q: "Chipped a molar on a Tuesday at 7 AM. They had me in the chair at 8:15 and fixed that morning.", a: "Tara S.", c: "Garden City · Emergency" },
+  { q: "No dental insurance, so I joined the $29 membership. Two cleanings in and it's already paid for itself.", a: "Chris D.", c: "Boise · Smile Club" },
+];
+
+const hours = [
+  ["Monday – Thursday", "7:00 AM – 5:00 PM"],
+  ["Friday", "7:00 AM – 2:00 PM"],
+  ["Saturday", "By appointment"],
+  ["Sunday", "Closed"],
+];
+
+const Stars = "★★★★★";
+---
+
+<Layout>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="nav" data-nav>
+    <div class="wrap nav__row">
+      <a class="brand" href="#top" aria-label="Ridgeline Family Dental, back to top">
+        <svg class="brand__mark" viewBox="0 0 32 22" aria-hidden="true" focusable="false">
+          <path d="M2 20l9-14 6 8.5L23 6l7 14z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" />
+        </svg>
+        <span class="brand__word">Ridgeline<span class="brand__sub">Family Dental</span></span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#insurance">Insurance</a>
+        <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#team">Our team</a>
+      </nav>
+
+      <div class="nav__end">
+        <a class="nav__tel" href={PHONE_HREF}>
+          <span class="sr-only">Call Ridgeline Family Dental at </span>{PHONE}
+        </a>
+        <a class="btn btn--gold nav__cta" href="#book">Book online</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div id="top"></div>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="rating rating--lg">
+            <span class="rating__stars" aria-hidden="true">{Stars}</span>
+            <span class="rating__text"><strong>4.9</strong> out of 5 · 412 Google reviews</span>
+          </p>
+
+          <h1 id="hero-h" class="hero__title">Straight answers.<br />Fair prices.<br /><em>On time.</em></h1>
+
+          <p class="hero__lede">
+            Family and cosmetic dentistry in downtown Boise. We're in-network with most PPO plans,
+            we quote you in dollars before we start, and we run on schedule.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--gold btn--lg" href="#book">Book your first visit</a>
+            <a class="btn btn--outline btn--lg" href={PHONE_HREF}>Call {PHONE}</a>
+          </div>
+
+          <ul class="hero__proof">
+            <li>In-network with most PPO plans</li>
+            <li>Same-day emergency appointments</li>
+            <li>Open at 7 AM, four days a week</li>
+          </ul>
+        </div>
+
+        <div class="hero__media">
+          <img class="hero__img" src={img(LOBBY, 900, 74)}
+            srcset={`${img(LOBBY, 600, 70)} 600w, ${img(LOBBY, 900, 74)} 900w, ${img(LOBBY, 1300, 74)} 1300w`}
+            sizes="(max-width: 900px) 92vw, 44vw"
+            width="900" height="1080"
+            alt="The Ridgeline waiting room: black molded chairs on pale oak legs along a white wall, a potted olive tree in the corner, and a black letterboard sign reading 'Smile like you mean it.'"
+            fetchpriority="high" />
+
+          <div class="offer" role="note" aria-label="New patient special">
+            <p class="offer__kicker">New patient special</p>
+            <p class="offer__price"><span class="offer__cur">$</span>99</p>
+            <p class="offer__what">Exam + digital X-rays + cleaning</p>
+            <p class="offer__was">Regularly $385</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ INSURANCE TICKER — the first question every US patient asks ══ -->
+    <section class="insbar on-dark" aria-labelledby="insbar-h">
+      <div class="wrap insbar__inner">
+        <h2 id="insbar-h" class="insbar__h">We take your insurance.</h2>
+        <ul class="carriers">
+          {carriers.map((c) => <li class="carrier">{c}</li>)}
+        </ul>
+        <p class="insbar__note">
+          Don't see your plan? <a href={PHONE_HREF}>Call us at {PHONE}</a> — we file out-of-network claims for you too.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ THE $99 OFFER, IN FULL ══ -->
+    <section class="deal" aria-labelledby="deal-h">
+      <div class="wrap deal__grid">
+        <figure class="deal__media" data-reveal>
+          <img src={img(SMILE, 900, 74)}
+            srcset={`${img(SMILE, 600, 70)} 600w, ${img(SMILE, 1000, 74)} 1000w`}
+            sizes="(max-width: 880px) 92vw, 40vw"
+            width="900" height="600"
+            alt="Close-up of a patient smiling to one side against a deep teal backdrop, showing healthy, natural-looking front teeth."
+            loading="lazy" />
+        </figure>
+
+        <div class="deal__body" data-reveal>
+          <p class="label">New patients</p>
+          <h2 id="deal-h" class="deal__title">Your first visit is $99. All of it.</h2>
+          <p class="deal__lede">
+            One price, three things: a full exam with Dr. Whitmore, a set of low-dose digital X-rays,
+            and a standard cleaning. Normally $385.
+          </p>
+
+          <ul class="deal__list">
+            <li><span class="check" aria-hidden="true"></span> Comprehensive exam and oral cancer screening</li>
+            <li><span class="check" aria-hidden="true"></span> Full digital X-ray series, 90% less radiation than film</li>
+            <li><span class="check" aria-hidden="true"></span> Standard cleaning and polish</li>
+            <li><span class="check" aria-hidden="true"></span> A written treatment plan with real dollar amounts</li>
+          </ul>
+
+          <a class="btn btn--dark btn--lg" href="#book">Claim the $99 visit</a>
+
+          <p class="deal__fine">
+            For new patients without dental insurance. Have a PPO plan? We'll bill it instead — most of
+            our insured patients pay <strong>$0</strong> for this same visit. Offer excludes periodontal
+            (deep) cleaning, which we'll quote before we do anything.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SERVICES ══ -->
+    <section class="svc" id="services" aria-labelledby="svc-h">
+      <div class="wrap">
+        <header class="svc__head" data-reveal>
+          <h2 id="svc-h" class="svc__title">What we do, and what it costs.</h2>
+          <p class="svc__sub">
+            Starting prices, published. Your plan may cover most of it — we'll verify your benefits
+            before your appointment and tell you the number.
+          </p>
+        </header>
+
+        <ul class="svc__list">
+          {services.map((s) => (
+            <li class="svc__row" data-reveal>
+              <div class="svc__body">
+                <h3 class="svc__name">{s.name}</h3>
+                <p class="svc__desc">{s.desc}</p>
+              </div>
+              <span class="svc__price">{s.price}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p class="svc__emerg">
+          <strong>Tooth emergency?</strong> Call {" "}
+          <a href={PHONE_HREF}>{PHONE}</a> before 10 AM and we'll see you the same day. Emergency exam
+          and X-ray, $89.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ INSURANCE + FINANCING (the full answer) ══ -->
+    <section class="ins on-dark" id="insurance" aria-labelledby="ins-h">
+      <div class="wrap">
+        <header class="ins__head" data-reveal>
+          <p class="label label--light">Insurance &amp; payment</p>
+          <h2 id="ins-h" class="ins__title">Nobody should need a decoder ring<br />to find out what a filling costs.</h2>
+        </header>
+
+        <div class="ins__grid">
+          <article class="panel panel--wide" data-reveal>
+            <h3 class="panel__h">Most PPO plans, in-network</h3>
+            <p class="panel__p">
+              Bring your card to the first visit — or send a photo of it ahead of time. We verify your
+              benefits, apply them at the counter, and file the claim ourselves. You never chase a
+              reimbursement.
+            </p>
+            <p class="panel__p">
+              We're out-of-network with HMO/DMO plans and Medicaid, and we'll tell you that on the phone
+              rather than after the appointment.
+            </p>
+          </article>
+
+          <article class="panel panel--gold" data-reveal>
+            <h3 class="panel__h">No insurance? The Smile Club.</h3>
+            <p class="panel__price">$29<span>/month</span></p>
+            <ul class="panel__list">
+              <li>Two cleanings and two exams a year</li>
+              <li>All routine X-rays</li>
+              <li>15% off every other treatment</li>
+              <li>No deductible, no annual maximum, no claim forms</li>
+            </ul>
+            <p class="panel__p panel__p--tight">Roughly 40% of our patients are on it.</p>
+          </article>
+
+          <article class="panel" data-reveal>
+            <h3 class="panel__h">Financing</h3>
+            <p class="panel__p">
+              We take <strong>CareCredit</strong> and <strong>Sunbit</strong>, and both approve in about
+              a minute at the front desk — soft credit check, no hit to your score to find out.
+            </p>
+            <p class="panel__p">
+              Treatment over $500 can go on a <strong>0% payment plan for 12 months</strong>, in-house.
+              No interest if you pay it on schedule.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ REVIEWS ══ -->
+    <section class="revs" id="reviews" aria-labelledby="revs-h">
+      <div class="wrap">
+        <header class="revs__head" data-reveal>
+          <div>
+            <h2 id="revs-h" class="revs__title">412 reviews. 4.9 stars.</h2>
+            <p class="revs__sub">Verified on Google, unedited, worst ones included.</p>
+          </div>
+          <p class="rating rating--block">
+            <span class="rating__stars" aria-hidden="true">{Stars}</span>
+            <span class="rating__text"><strong>4.9</strong> average rating out of 5, from 412 Google reviews</span>
+          </p>
+        </header>
+
+        <div class="revs__grid">
+          {reviews.map((r) => (
+            <figure class={r.featured ? "rev rev--lead" : "rev"} data-reveal>
+              <p class="rating rating--sm">
+                <span class="rating__stars" aria-hidden="true">{Stars}</span>
+                <span class="sr-only">Rated 5 out of 5 stars.</span>
+              </p>
+              <blockquote class="rev__q">{r.q}</blockquote>
+              <figcaption class="rev__by">
+                <span class="rev__a">{r.a}</span>
+                <span class="rev__c">{r.c}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TEAM ══ -->
+    <section class="team" id="team" aria-labelledby="team-h">
+      <div class="wrap team__grid">
+        <div class="team__body" data-reveal>
+          <h2 id="team-h" class="team__title">Two dentists. Same two<br />dentists, every time.</h2>
+          <p class="team__lede">
+            Ridgeline is not a DSO. Dr. Alyssa Whitmore bought this practice in 2014 and still works
+            four days a week in it, alongside Dr. Ben Ortega. You'll see one of them — not whoever the
+            corporate schedule sent over that month.
+          </p>
+          <ul class="team__points">
+            <li><span class="check" aria-hidden="true"></span> <strong>No commission on treatment plans.</strong> Nobody here gets paid more for finding you a crown.</li>
+            <li><span class="check" aria-hidden="true"></span> <strong>We'll say "watch it."</strong> Not every dark spot needs drilling this year.</li>
+            <li><span class="check" aria-hidden="true"></span> <strong>Intraoral scanner, no impression putty.</strong> Same for aligners and crowns.</li>
+            <li><span class="check" aria-hidden="true"></span> <strong>Fifteen minutes late is late.</strong> If we run over, we say so when you check in.</li>
+          </ul>
+          <p class="team__creds">
+            Alyssa Whitmore, DDS · Creighton University · ID License #D-4821<br />
+            Ben Ortega, DMD · Oregon Health &amp; Science University · ID License #D-6107
+          </p>
+        </div>
+
+        <figure class="team__media" data-reveal>
+          <img src={img(CHAIR, 900, 74)}
+            srcset={`${img(CHAIR, 600, 70)} 600w, ${img(CHAIR, 1000, 74)} 1000w`}
+            sizes="(max-width: 880px) 92vw, 42vw"
+            width="900" height="1125"
+            alt="A dentist in black scrubs and white gloves fitting a clear aligner tray for a patient reclined in the chair, with her 3D tooth scan displayed on the monitor behind them."
+            loading="lazy" />
+          <figcaption class="team__cap">Clear aligner fitting, scanned in-house that morning</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ══ BOOK ══ -->
+    <section class="book on-dark" id="book" aria-labelledby="book-h">
+      <div class="wrap book__grid">
+        <div class="book__intro" data-reveal>
+          <p class="label label--light">Request an appointment</p>
+          <h2 id="book-h" class="book__title">Let's get you on the schedule.</h2>
+          <p class="book__lede">
+            Send this over and someone from the front desk calls you back the same business day —
+            usually within an hour. Need something faster? Just call.
+          </p>
+
+          <div class="book__cols">
+            <div>
+              <h3 class="book__sub">Visit us</h3>
+              <address class="book__addr">
+                1420 W Bannock St, Suite 210<br />
+                Boise, ID 83702<br />
+                <span class="book__hint">Free garage parking on 15th</span>
+              </address>
+              <p class="book__link"><a href={PHONE_HREF}>{PHONE}</a></p>
+              <p class="book__link"><a href="mailto:hello@ridgelinefamilydental.com">hello@ridgelinefamilydental.com</a></p>
+            </div>
+            <div>
+              <h3 class="book__sub">Office hours</h3>
+              <dl class="hours">
+                {hours.map(([d, h]) => (<><dt>{d}</dt><dd>{h}</dd></>))}
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <form class="form" data-reveal novalidate>
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(208) 555-0142" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="reason">What brings you in?</label>
+            <select id="reason" name="reason">
+              <option>New patient exam &amp; cleaning ($99 special)</option>
+              <option>Cleaning / checkup</option>
+              <option>Tooth pain or emergency</option>
+              <option>Invisalign consult</option>
+              <option>Crown, filling or implant</option>
+              <option>Whitening or veneers</option>
+              <option>My child's first visit</option>
+              <option>Something else</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="carrier">Dental insurance <span class="field__opt">(optional)</span></label>
+            <input id="carrier" name="carrier" type="text" list="carrier-list" placeholder="Delta Dental, Cigna, none…" />
+            <datalist id="carrier-list">
+              {carriers.map((c) => <option value={c}></option>)}
+            </datalist>
+          </div>
+
+          <fieldset class="field field--radio">
+            <legend>Best time to reach you</legend>
+            <div class="radios">
+              <label><input type="radio" name="when" value="morning" checked /> Mornings</label>
+              <label><input type="radio" name="when" value="afternoon" /> Afternoons</label>
+              <label><input type="radio" name="when" value="any" /> Either</label>
+            </div>
+          </fieldset>
+
+          <button class="btn btn--gold btn--lg form__submit" type="submit">Request appointment</button>
+
+          <p class="form__note" data-form-note role="status">
+            We call back the same business day. We never sell or share your information.
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div>
+        <a class="brand brand--foot" href="#top">
+          <svg class="brand__mark" viewBox="0 0 32 22" aria-hidden="true" focusable="false">
+            <path d="M2 20l9-14 6 8.5L23 6l7 14z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" />
+          </svg>
+          <span class="brand__word">Ridgeline<span class="brand__sub">Family Dental</span></span>
+        </a>
+        <p class="foot__tag">
+          General, family and cosmetic dentistry in downtown Boise since 2014. Accepting new patients
+          of every age.
+        </p>
+      </div>
+
+      <nav class="foot__nav" aria-label="Footer">
+        <h2 class="foot__h">Explore</h2>
+        <a href="#services">Services &amp; pricing</a>
+        <a href="#insurance">Insurance &amp; financing</a>
+        <a href="#reviews">Patient reviews</a>
+        <a href="#team">Our dentists</a>
+        <a href="#book">Request an appointment</a>
+      </nav>
+
+      <div class="foot__contact">
+        <h2 class="foot__h">Ridgeline Family Dental</h2>
+        <address>
+          1420 W Bannock St, Suite 210<br />
+          Boise, ID 83702
+        </address>
+        <p><a href={PHONE_HREF}>{PHONE}</a></p>
+        <p>Mon–Thu 7:00 AM – 5:00 PM<br />Fri 7:00 AM – 2:00 PM</p>
+      </div>
+    </div>
+
+    <div class="wrap foot__legal">
+      <p>© 2026 Ridgeline Family Dental · Privacy Policy · Notice of Privacy Practices (HIPAA) · Accessibility Statement</p>
+      <p class="foot__by">
+        Site by <a href="#top"><strong>Sergio's Web</strong></a> — built to WCAG 2.1 AA.
+      </p>
+      <p class="foot__demo">Demo site. Ridgeline Family Dental is a fictional practice.</p>
+    </div>
+  </footer>
+
+  <!-- Mobile call bar: US practices live on inbound calls -->
+  <div class="callbar" aria-label="Quick contact">
+    <a class="callbar__call" href={PHONE_HREF}>Call {PHONE}</a>
+    <a class="callbar__book" href="#book">Book</a>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var root = document.documentElement;
+      var nav = document.querySelector("[data-nav]");
+      var onScroll = function () { if (nav) nav.classList.toggle("is-stuck", window.scrollY > 20); };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce && "IntersectionObserver" in window) {
+        root.classList.add("js-reveal");
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
+        document.querySelectorAll("[data-reveal]").forEach(function (el) { io.observe(el); });
+      }
+
+      var form = document.querySelector(".form");
+      var note = document.querySelector("[data-form-note]");
+      if (form) form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        note.textContent = "Request sent. We'll call you back today — usually within the hour.";
+        note.classList.add("is-ok");
+        form.querySelector(".form__submit").textContent = "Sent ✓";
+      });
+    })();
+  </script>
+
+  <style>
+    /* ════════ NAV ════════ */
+    .skip {
+      position: fixed; top: 0; left: 50%; transform: translate(-50%, -130%);
+      background: var(--spruce-900); color: var(--chalk);
+      padding: 0.75rem 1.3rem; border-radius: 0 0 8px 8px; z-index: var(--z-overlay);
+      font-weight: 600; transition: transform 0.2s var(--ease-out);
+    }
+    .skip:focus { transform: translate(-50%, 0); }
+
+    .nav {
+      position: sticky; top: 0; z-index: var(--z-nav);
+      background: var(--chalk);
+      transition: box-shadow 0.3s var(--ease-out), background 0.3s var(--ease-out);
+    }
+    .nav.is-stuck {
+      background: color-mix(in oklch, var(--chalk) 90%, transparent);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 var(--line), 0 8px 24px -20px var(--spruce-900);
+    }
+    .nav__row { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.5rem); padding-block: 0.9rem; }
+
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--spruce-800); flex: none; }
+    .brand__mark { width: 30px; height: 21px; color: var(--gold-deep); flex: none; }
+    .brand__word {
+      font-family: var(--display); font-size: var(--step-1); font-weight: 600;
+      letter-spacing: -0.02em; line-height: 1; display: flex; flex-direction: column;
+    }
+    .brand__sub {
+      font-family: var(--sans); font-size: 0.62em; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.28em;
+    }
+    .brand--foot { color: var(--chalk); }
+    .brand--foot .brand__mark { color: var(--gold); }
+    .brand--foot .brand__sub { color: color-mix(in oklch, var(--chalk) 62%, transparent); }
+
+    .nav__links { display: flex; gap: 1.5rem; margin-inline: auto; font-size: var(--step--1); font-weight: 600; }
+    .nav__links a { position: relative; padding-block: 0.35rem; color: var(--spruce-800); }
+    .nav__links a::after {
+      content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px;
+      background: var(--gold-deep); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .nav__links a:hover::after, .nav__links a:focus-visible::after { transform: scaleX(1); }
+
+    .nav__end { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+    .nav__tel { font-weight: 700; font-size: var(--step-0); color: var(--spruce-800); white-space: nowrap; }
+    .nav__tel:hover { color: var(--gold-text); }
+
+    /* ════════ BUTTONS ════════ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.75rem 1.35rem; border-radius: var(--radius);
+      font-weight: 700; font-size: var(--step--1); letter-spacing: 0.005em;
+      border: 2px solid transparent; white-space: nowrap;
+      transition: transform 0.2s var(--ease-out), background 0.2s var(--ease-out),
+                  color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+    }
+    .btn--lg { padding: 0.95rem 1.7rem; font-size: var(--step-0); }
+    .btn--gold { background: var(--gold); color: var(--spruce-900); }
+    .btn--gold:hover { background: var(--gold-deep); color: var(--spruce-900); transform: translateY(-2px); }
+    .btn--dark { background: var(--spruce-800); color: var(--chalk); }
+    .btn--dark:hover { background: var(--spruce-900); transform: translateY(-2px); }
+    .btn--outline { border-color: var(--line-strong); color: var(--spruce-800); }
+    .btn--outline:hover { border-color: var(--spruce-800); background: var(--chalk-2); transform: translateY(-2px); }
+    @media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } }
+
+    @media (max-width: 1000px) { .nav__links { display: none; } }
+    @media (max-width: 620px) {
+      .nav__tel { display: none; }
+      .nav__row { gap: 0.75rem; }
+      .brand__word { font-size: var(--step-0); }
+    }
+
+    /* ════════ RATING ════════ */
+    .rating { display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .rating__stars { color: var(--gold-deep); letter-spacing: 0.12em; line-height: 1; }
+    .rating__text { font-size: var(--step--1); color: var(--muted); }
+    .rating__text strong { color: var(--ink); font-weight: 700; }
+    .rating--lg .rating__stars { font-size: var(--step-1); }
+    .rating--lg .rating__text { font-size: var(--step-0); }
+    .rating--sm .rating__stars { font-size: var(--step-0); }
+    .rating--block { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+
+    /* ════════ HERO ════════ */
+    .hero { padding-block: clamp(2rem, 6vh, 4.5rem) clamp(3rem, 8vh, 6rem); }
+    .hero__grid {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.85fr);
+      gap: clamp(2rem, 6vw, 4.5rem); align-items: center;
+    }
+    .hero__title {
+      font-size: var(--step-5); font-weight: 500; line-height: 0.98;
+      margin-top: 1.4rem; letter-spacing: -0.035em;
+    }
+    .hero__title em { font-style: italic; color: var(--gold-text); font-weight: 400; }
+    .hero__lede {
+      margin-top: 1.5rem; max-width: 46ch; font-size: var(--step-1);
+      line-height: 1.5; color: var(--muted);
+    }
+    .hero__actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .hero__proof {
+      margin-top: 2.2rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
+      list-style: none; padding-left: 0; display: flex; flex-wrap: wrap;
+      gap: 0.5rem clamp(1rem, 3vw, 2rem); font-size: var(--step--1); font-weight: 600;
+      color: var(--spruce-700);
+    }
+    .hero__proof li { display: flex; align-items: center; gap: 0.5rem; }
+    .hero__proof li::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gold-deep); flex: none;
+    }
+
+    .hero__media { position: relative; }
+    .hero__img {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 40%;
+      border-radius: var(--radius-lg);
+    }
+    .offer {
+      position: absolute; left: clamp(-1.5rem, -2vw, -0.5rem); bottom: clamp(-1.2rem, -2vw, -0.5rem);
+      background: var(--spruce-900); color: var(--chalk);
+      padding: 1.1rem 1.4rem 1.2rem; border-radius: var(--radius-lg);
+      box-shadow: 0 26px 50px -28px var(--spruce-900);
+      border-top: 4px solid var(--gold);
+      max-width: 15rem;
+    }
+    .offer__kicker {
+      font-size: var(--step--1); font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--gold);
+    }
+    .offer__price {
+      font-family: var(--display); font-size: clamp(2.6rem, 2rem + 2.4vw, 3.6rem);
+      font-weight: 600; line-height: 1; margin-top: 0.35rem; letter-spacing: -0.03em;
+    }
+    .offer__cur { font-size: 0.5em; vertical-align: 0.55em; margin-right: 0.05em; }
+    .offer__what { font-size: var(--step--1); margin-top: 0.5rem; line-height: 1.4; }
+    .offer__was {
+      font-size: var(--step--1); margin-top: 0.3rem;
+      color: color-mix(in oklch, var(--chalk) 68%, transparent); text-decoration: line-through;
+    }
+
+    @media (max-width: 900px) {
+      .hero__grid { grid-template-columns: 1fr; gap: 2.6rem; }
+      .hero__media { max-width: 30rem; margin-inline: auto; width: 100%; }
+      .hero__img { aspect-ratio: 3 / 2; object-position: 50% 55%; }
+      .offer { left: auto; right: 0.75rem; bottom: -1rem; }
+    }
+
+    /* ════════ INSURANCE BAR ════════ */
+    .insbar {
+      background: var(--spruce-900); color: var(--chalk);
+      padding-block: clamp(2.2rem, 5vh, 3.2rem);
+    }
+    .insbar__inner { display: grid; gap: 1.1rem; justify-items: center; text-align: center; }
+    .insbar__h { font-size: var(--step-2); color: var(--chalk); }
+    .carriers {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 0.6rem;
+    }
+    .carrier {
+      font-size: var(--step--1); font-weight: 600;
+      padding: 0.4rem 0.85rem; border-radius: 999px;
+      border: 1px solid var(--line-dark);
+      color: color-mix(in oklch, var(--chalk) 92%, transparent);
+    }
+    .insbar__note { font-size: var(--step--1); color: color-mix(in oklch, var(--chalk) 78%, transparent); }
+    .insbar__note a { color: var(--gold); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ════════ DEAL ════════ */
+    .deal { padding-block: clamp(3.5rem, 10vh, 7rem); }
+    .deal__grid {
+      display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+      gap: clamp(2rem, 6vw, 4.5rem); align-items: center;
+    }
+    .deal__media img {
+      width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: var(--radius-lg);
+    }
+    .deal__title { font-size: var(--step-3); margin-top: 0.7rem; }
+    .deal__lede { margin-top: 1rem; font-size: var(--step-1); color: var(--muted); max-width: 48ch; }
+    .deal__list { list-style: none; padding: 0; margin: 1.6rem 0 1.9rem; display: grid; gap: 0.75rem; }
+    .deal__list li, .team__points li { position: relative; padding-left: 2rem; line-height: 1.55; }
+    .check {
+      position: absolute; left: 0; top: 0.42em; width: 1.15rem; height: 1.15rem; border-radius: 50%;
+      background: color-mix(in oklch, var(--gold) 42%, transparent);
+    }
+    .check::after {
+      content: ""; position: absolute; left: 0.36rem; top: 0.18rem;
+      width: 0.32rem; height: 0.62rem; border: solid var(--spruce-800);
+      border-width: 0 2.2px 2.2px 0; transform: rotate(42deg);
+    }
+    .deal__fine {
+      margin-top: 1.6rem; font-size: var(--step--1); color: var(--muted);
+      max-width: 56ch; line-height: 1.6;
+      padding-top: 1.1rem; border-top: 1px solid var(--line);
+    }
+    .deal__fine strong { color: var(--ink); }
+    @media (max-width: 880px) {
+      .deal__grid { grid-template-columns: 1fr; gap: 2.2rem; }
+      .deal__media img { aspect-ratio: 16 / 10; }
+    }
+
+    /* ════════ SERVICES ════════ */
+    .svc { padding-block: clamp(3.5rem, 10vh, 7rem); background: var(--chalk-2); }
+    .svc__head {
+      display: grid; gap: 1rem; margin-bottom: clamp(2rem, 5vw, 3rem);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: end;
+    }
+    .svc__title { font-size: var(--step-3); }
+    .svc__sub { color: var(--muted); max-width: 46ch; }
+    @media (max-width: 780px) { .svc__head { grid-template-columns: 1fr; } }
+
+    .svc__list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+    .svc__row {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline; gap: clamp(1rem, 3vw, 2.5rem);
+      padding-block: clamp(1.15rem, 2.4vw, 1.7rem);
+      border-bottom: 1px solid var(--line);
+      transition: background 0.25s var(--ease-out);
+    }
+    .svc__row:hover { background: color-mix(in oklch, var(--chalk) 70%, transparent); }
+    .svc__name { font-size: var(--step-2); font-weight: 500; }
+    .svc__desc { margin-top: 0.3rem; color: var(--muted); max-width: 58ch; font-size: var(--step-0); }
+    .svc__price {
+      font-family: var(--display); font-size: var(--step-1); font-weight: 600;
+      color: var(--spruce-800); white-space: nowrap; font-variant-numeric: tabular-nums;
+    }
+    .svc__emerg {
+      margin-top: 2rem; padding: 1.1rem 1.3rem; border-radius: var(--radius);
+      background: color-mix(in oklch, var(--gold) 26%, var(--chalk));
+      font-size: var(--step-0);
+    }
+    .svc__emerg a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 560px) {
+      .svc__row { grid-template-columns: 1fr; row-gap: 0.45rem; }
+      .svc__price { justify-self: start; }
+    }
+
+    /* ════════ INSURANCE PANELS ════════ */
+    .ins {
+      background: var(--spruce-900); color: var(--chalk);
+      padding-block: clamp(3.8rem, 11vh, 7.5rem);
+      background-image: radial-gradient(90% 70% at 85% 0%, var(--spruce-700), transparent 62%);
+    }
+    .ins__head { margin-bottom: clamp(2rem, 5vw, 3.2rem); display: grid; gap: 0.8rem; }
+    .ins__title { font-size: var(--step-3); color: var(--chalk); }
+    .ins__grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.6rem); align-items: start;
+    }
+    .panel {
+      background: color-mix(in oklch, var(--chalk) 8%, transparent);
+      border: 1px solid var(--line-dark);
+      border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2rem);
+    }
+    .panel--wide { grid-column: span 1; }
+    .panel__h { font-size: var(--step-1); color: var(--chalk); margin-bottom: 0.8rem; }
+    .panel__p { color: color-mix(in oklch, var(--chalk) 84%, transparent); line-height: 1.6; }
+    .panel__p + .panel__p { margin-top: 0.8rem; }
+    .panel__p--tight { margin-top: 1rem; font-size: var(--step--1); }
+    .panel__p strong { color: var(--chalk); font-weight: 700; }
+
+    .panel--gold {
+      background: var(--gold); color: var(--spruce-900);
+      border-color: transparent;
+    }
+    .panel--gold .panel__h { color: var(--spruce-900); }
+    .panel--gold .panel__p { color: color-mix(in oklch, var(--spruce-900) 86%, transparent); }
+    .panel__price {
+      font-family: var(--display); font-size: var(--step-4); font-weight: 600;
+      line-height: 1; letter-spacing: -0.03em; margin-bottom: 0.9rem;
+    }
+    .panel__price span { font-family: var(--sans); font-size: 0.28em; font-weight: 700; letter-spacing: 0; }
+    .panel__list { list-style: none; padding: 0; display: grid; gap: 0.5rem; font-size: var(--step--1); font-weight: 500; }
+    .panel__list li { position: relative; padding-left: 1.2rem; }
+    .panel__list li::before {
+      content: ""; position: absolute; left: 0; top: 0.62em;
+      width: 0.45rem; height: 0.45rem; background: var(--spruce-800); border-radius: 1px;
+      transform: rotate(45deg);
+    }
+
+    /* ════════ REVIEWS ════════ */
+    .revs { padding-block: clamp(3.5rem, 10vh, 7rem); }
+    .revs__head {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
+      gap: 1.5rem; margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
+    }
+    .revs__title { font-size: var(--step-3); }
+    .revs__sub { margin-top: 0.6rem; color: var(--muted); }
+    .revs__grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.5rem);
+    }
+    .rev {
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      padding: clamp(1.3rem, 2.6vw, 1.8rem);
+      display: flex; flex-direction: column; gap: 1rem;
+      background: var(--chalk);
+    }
+    .rev__q { font-size: var(--step-0); line-height: 1.6; flex: 1; }
+    .rev--lead {
+      background: var(--spruce-800); color: var(--chalk); border-color: transparent;
+      grid-column: span 2;
+    }
+    .rev--lead .rating__stars { color: var(--gold); }
+    .rev--lead .rev__q { font-family: var(--display); font-size: var(--step-2); line-height: 1.32; font-weight: 400; }
+    .rev--lead .rev__c { color: color-mix(in oklch, var(--chalk) 72%, transparent); }
+    .rev__by { display: flex; flex-direction: column; gap: 0.1rem; }
+    .rev__a { font-weight: 700; }
+    .rev__c { font-size: var(--step--1); color: var(--muted); }
+    @media (max-width: 760px) { .rev--lead { grid-column: span 1; } }
+
+    /* ════════ TEAM ════════ */
+    .team { padding-block: clamp(3.5rem, 10vh, 7rem); background: var(--chalk-2); }
+    .team__grid {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr);
+      gap: clamp(2rem, 6vw, 4.5rem); align-items: center;
+    }
+    .team__title { font-size: var(--step-3); }
+    .team__lede { margin-top: 1.1rem; color: var(--muted); font-size: var(--step-1); max-width: 50ch; }
+    .team__points { list-style: none; padding: 0; margin-top: 1.8rem; display: grid; gap: 0.85rem; }
+    .team__points strong { font-weight: 700; color: var(--ink); }
+    .team__creds {
+      margin-top: 1.8rem; padding-top: 1.1rem; border-top: 1px solid var(--line);
+      font-size: var(--step--1); color: var(--muted); line-height: 1.7;
+    }
+    .team__media img {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 45%;
+      border-radius: var(--radius-lg);
+    }
+    .team__cap { margin-top: 0.7rem; font-size: var(--step--1); color: var(--muted); }
+    @media (max-width: 880px) {
+      .team__grid { grid-template-columns: 1fr; gap: 2.2rem; }
+      .team__media { order: -1; max-width: 26rem; }
+      .team__media img { aspect-ratio: 3 / 2; }
+    }
+
+    /* ════════ BOOK ════════ */
+    .book {
+      background: var(--spruce-900); color: var(--chalk);
+      padding-block: clamp(3.8rem, 11vh, 7rem);
+      background-image: radial-gradient(85% 75% at 8% 0%, var(--spruce-700), transparent 58%);
+    }
+    .book__grid {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      gap: clamp(2rem, 6vw, 4.5rem); align-items: start;
+    }
+    .book__title { font-size: var(--step-3); color: var(--chalk); margin-top: 0.7rem; }
+    .book__lede {
+      margin-top: 1rem; font-size: var(--step-1); max-width: 42ch;
+      color: color-mix(in oklch, var(--chalk) 86%, transparent);
+    }
+    .book__cols {
+      margin-top: 2.4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+      gap: 2rem;
+    }
+    .book__sub {
+      font-family: var(--sans); font-size: var(--step--1); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .book__addr { font-style: normal; line-height: 1.7; color: color-mix(in oklch, var(--chalk) 88%, transparent); }
+    .book__hint { font-size: var(--step--1); color: color-mix(in oklch, var(--chalk) 66%, transparent); }
+    .book__link { margin-top: 0.7rem; font-weight: 600; }
+    .book__link a { text-decoration: underline; text-underline-offset: 3px; word-break: break-word; }
+    .book__link a:hover { color: var(--gold); }
+    .hours { display: grid; grid-template-columns: 1fr auto; gap: 0.45rem 1rem; font-size: var(--step--1); }
+    .hours dt { color: color-mix(in oklch, var(--chalk) 74%, transparent); }
+    .hours dd { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+
+    .form {
+      background: var(--chalk); color: var(--ink);
+      padding: clamp(1.4rem, 3.2vw, 2.3rem); border-radius: var(--radius-lg);
+      display: grid; gap: 1rem;
+      box-shadow: 0 30px 70px -35px oklch(0 0 0 / 0.8);
+    }
+    .field { display: grid; gap: 0.35rem; min-width: 0; }
+    .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 1rem; }
+    .field label, .field legend { font-size: var(--step--1); font-weight: 700; color: var(--spruce-800); }
+    .field__opt { font-weight: 400; color: var(--muted); }
+    .field input, .field select {
+      font: inherit; padding: 0.75rem 0.85rem; border-radius: var(--radius);
+      border: 1px solid var(--line-strong); background: var(--chalk); color: var(--ink);
+      width: 100%; min-width: 0;
+      transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+    }
+    .field input::placeholder { color: var(--muted); }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--gold-deep);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--gold) 45%, transparent);
+    }
+    .field--radio { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+    .radios { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; margin-top: 0.4rem; }
+    .radios label { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 500; }
+    .radios input { accent-color: var(--gold-deep); width: 1.05rem; height: 1.05rem; }
+    .form__submit { justify-self: stretch; margin-top: 0.4rem; }
+    .form__note { font-size: var(--step--1); color: var(--muted); line-height: 1.5; }
+    .form__note.is-ok { color: var(--spruce-800); font-weight: 700; }
+    @media (max-width: 880px) { .book__grid { grid-template-columns: 1fr; } }
+
+    /* ════════ FOOTER ════════ */
+    .foot {
+      background: var(--spruce-900); color: var(--chalk);
+      padding-block: clamp(2.8rem, 7vh, 4rem) 1.8rem;
+    }
+    .foot__grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2.2rem;
+      padding-bottom: 2.2rem; border-bottom: 1px solid var(--line-dark);
+    }
+    .foot__h {
+      font-family: var(--sans); font-size: var(--step--1); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: color-mix(in oklch, var(--chalk) 62%, transparent); margin-bottom: 0.9rem;
+    }
+    .foot__tag {
+      margin-top: 1rem; max-width: 36ch; font-size: var(--step--1);
+      color: color-mix(in oklch, var(--chalk) 76%, transparent);
+    }
+    .foot__nav { display: grid; gap: 0.55rem; align-content: start; font-size: var(--step--1); }
+    .foot__nav a { color: color-mix(in oklch, var(--chalk) 88%, transparent); }
+    .foot__nav a:hover, .foot__contact a:hover { color: var(--gold); }
+    .foot__contact { font-size: var(--step--1); display: grid; gap: 0.7rem; align-content: start; color: color-mix(in oklch, var(--chalk) 84%, transparent); }
+    .foot__contact address { font-style: normal; line-height: 1.6; }
+    .foot__legal {
+      display: grid; gap: 0.5rem; margin-top: 1.6rem; font-size: var(--step--1);
+      color: color-mix(in oklch, var(--chalk) 64%, transparent);
+    }
+    .foot__by a { text-decoration: underline; text-underline-offset: 3px; }
+    .foot__by strong { color: var(--gold); font-weight: 700; }
+    .foot__demo { color: color-mix(in oklch, var(--chalk) 52%, transparent); }
+    @media (max-width: 720px) { .foot__grid { grid-template-columns: 1fr; gap: 1.8rem; } }
+
+    /* ════════ MOBILE CALL BAR ════════ */
+    .callbar { display: none; }
+    @media (max-width: 620px) {
+      .callbar {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky);
+        display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;
+        padding: 0.6rem 0.8rem calc(0.6rem + env(safe-area-inset-bottom));
+        background: color-mix(in oklch, var(--spruce-900) 96%, transparent);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid var(--line-dark);
+      }
+      .callbar a {
+        padding: 0.75rem 1rem; border-radius: var(--radius);
+        font-weight: 700; font-size: var(--step--1); text-align: center;
+      }
+      .callbar__call { background: var(--gold); color: var(--spruce-900); }
+      .callbar__book { border: 2px solid var(--line-dark); color: var(--chalk); }
+      .foot { padding-bottom: 5.5rem; }
+    }
+
+    /* ════════ REVEAL (progressive enhancement) ════════ */
+    .js-reveal [data-reveal] {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+    }
+    .js-reveal [data-reveal].is-in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .js-reveal [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</Layout>
