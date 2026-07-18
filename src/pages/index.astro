@@ -279,6 +279,11 @@ const Stars = "★★★★★";
                 <span class="rev__a">{r.a}</span>
                 <span class="rev__c">{r.c}</span>
               </figcaption>
+              {r.featured && (
+                <p class="rev__more">
+                  <a href="#book">Read all 412 reviews on Google</a>
+                </p>
+              )}
             </figure>
           ))}
         </div>
@@ -603,7 +608,7 @@ const Stars = "★★★★★";
 
     .hero__media { position: relative; }
     .hero__img {
-      width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 40%;
+      width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 46%;
       border-radius: var(--radius-lg);
     }
     .offer {
@@ -776,9 +781,11 @@ const Stars = "★★★★★";
     }
     .revs__title { font-size: var(--step-3); }
     .revs__sub { margin-top: 0.6rem; color: var(--muted); }
-    .revs__grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-      gap: clamp(1rem, 2.5vw, 1.5rem);
+    .revs__grid { display: grid; gap: clamp(1rem, 2.5vw, 1.5rem); }
+    /* Lead quote takes the left two thirds; the three short ones stack beside it */
+    @media (min-width: 860px) {
+      .revs__grid { grid-template-columns: repeat(3, 1fr); }
+      .rev--lead { grid-column: span 2; grid-row: span 3; }
     }
     .rev {
       border: 1px solid var(--line); border-radius: var(--radius-lg);
@@ -789,15 +796,23 @@ const Stars = "★★★★★";
     .rev__q { font-size: var(--step-0); line-height: 1.6; flex: 1; }
     .rev--lead {
       background: var(--spruce-800); color: var(--chalk); border-color: transparent;
-      grid-column: span 2;
+      justify-content: space-between;
+    }
+    .rev__more { margin-top: auto; padding-top: 0.4rem; }
+    .rev__more a {
+      font-weight: 700; font-size: var(--step--1); color: var(--gold);
+      text-decoration: underline; text-underline-offset: 4px;
     }
     .rev--lead .rating__stars { color: var(--gold); }
-    .rev--lead .rev__q { font-family: var(--display); font-size: var(--step-2); line-height: 1.32; font-weight: 400; }
+    .rev--lead .rev__q {
+      font-family: var(--display); font-size: var(--step-3); line-height: 1.24;
+      font-weight: 400; letter-spacing: -0.02em;
+    }
     .rev--lead .rev__c { color: color-mix(in oklch, var(--chalk) 72%, transparent); }
     .rev__by { display: flex; flex-direction: column; gap: 0.1rem; }
     .rev__a { font-weight: 700; }
     .rev__c { font-size: var(--step--1); color: var(--muted); }
-    @media (max-width: 760px) { .rev--lead { grid-column: span 1; } }
+    .rev--lead .rev__q { flex: none; }
 
     /* ════════ TEAM ════════ */
     .team { padding-block: clamp(3.5rem, 10vh, 7rem); background: var(--chalk-2); }
@@ -854,7 +869,7 @@ const Stars = "★★★★★";
     .book__link a { text-decoration: underline; text-underline-offset: 3px; word-break: break-word; }
     .book__link a:hover { color: var(--gold); }
     .hours { display: grid; grid-template-columns: 1fr auto; gap: 0.45rem 1rem; font-size: var(--step--1); }
-    .hours dt { color: color-mix(in oklch, var(--chalk) 74%, transparent); }
+    .hours dt { color: color-mix(in oklch, var(--chalk) 74%, transparent); white-space: nowrap; }
     .hours dd { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
 
     .form {
@@ -940,13 +955,15 @@ const Stars = "★★★★★";
     }
 
     /* ════════ REVEAL (progressive enhancement) ════════ */
+    /* Transform-only: content is legible from the first paint even if the
+       observer never fires (hidden tab, headless render, JS error). */
     .js-reveal [data-reveal] {
-      opacity: 0; transform: translateY(16px);
-      transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+      transform: translateY(16px);
+      transition: transform 0.65s var(--ease-out);
     }
-    .js-reveal [data-reveal].is-in { opacity: 1; transform: none; }
+    .js-reveal [data-reveal].is-in { transform: none; }
     @media (prefers-reduced-motion: reduce) {
-      .js-reveal [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .js-reveal [data-reveal] { transform: none; transition: none; }
     }
   </style>
 </Layout>
